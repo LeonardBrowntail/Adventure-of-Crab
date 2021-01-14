@@ -1,0 +1,54 @@
+calc = true;
+                                    paths = 0;
+                                    lastQueue = toDestroy;
+                                    if (!bubbles[select.x][select.y].impulse & bubbles[select.x][select.y].colorIndex == selectColor & bubbles[select.x][select.y].active) {
+                                        toDestroy.push(new Vector2(select.x, select.y));
+                                        bubbles[select.x][select.y].impulse = true;
+                                        boolean up = false;
+                                        boolean right = false;
+                                        boolean left = false;
+                                        boolean down = false;
+                                        if (select.y != 0) {
+                                            if (bubbles[select.x][select.y - 1].colorIndex == selectColor & !bubbles[select.x][select.y - 1].impulse) {
+                                                paths++;
+                                                up = true;
+                                            }
+                                        }
+                                        if (select.x != 9) {
+                                            if (bubbles[select.x + 1][select.y].colorIndex == selectColor & !bubbles[select.x + 1][select.y].impulse) {
+                                                paths++;
+                                                right = true;
+                                            }
+                                        }
+                                        if (select.x != 0) {
+                                            if (bubbles[select.x - 1][select.y].colorIndex == selectColor & !bubbles[select.x - 1][select.y].impulse) {
+                                                paths++;
+                                                left = true;
+                                            }
+                                        }
+                                        if (select.y != 19) {
+                                            if (bubbles[select.x][select.y + 1].colorIndex == selectColor & !bubbles[select.x][select.y + 1].impulse) {
+                                                paths++;
+                                                down = true;
+                                            }
+                                        }
+
+                                        if (paths == 0) {
+                                            if (branchPos != null) {
+                                                select = branchPos;
+                                            }
+                                        }
+                                        if (paths == 1) {
+                                            if (up) select.up();
+                                            else if (right) select.right();
+                                            else if (left) select.left();
+                                            else if (down) select.down();
+                                        }
+                                        if (paths > 1) {
+                                            branchPos = select;
+                                            if (up) select.up();
+                                            else if (right) select.right();
+                                            else if (left) select.left();
+                                            else if (down) select.down();
+                                        }
+                                    }
